@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیستم مستندات درایو Shihlin</title>
+
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- Font Preload -->
+    <link rel="preload" href="path/to/iran-sans.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+
+    <!-- Custom Styles -->
+    <style>
+        @font-face {
+            font-family: 'IRANSans';
+            src: url('iran-sans.woff2') format('woff2'),
+                 url('iran-sans.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1d4ed8;
+            --accent-color: #3b82f6;
+            --background-color: #f3f4f6;
+            --text-color: #1f2937;
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            font-family: 'IRANSans', Tahoma, Arial, sans-serif;
+            color: var(--text-color);
+            background: var(--background-color);
+            direction: rtl;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* جلوگیری از نمایش لاگین قبل از لود کامل */
+        .login-section, .main-section {
+            display: none;
+        }
+
+        .active-section {
+            display: block;
+        }
+
+        /* استایل فرم لاگین */
+        .login-container {
+            width: 400px; /* بزرگ‌تر کردن فرم */
+            padding: 2.5rem;
+            border-radius: 15px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* تنظیمات داخلی فرم */
+        .form-container {
+            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.97);
+            padding: 2rem;
+            border-radius: 10px;
+            width: 100%;
+        }
+
+        /* افکت‌ها و انیمیشن‌ها */
+        .nav-link {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            border-bottom-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        /* بهبود اسکرول‌بار */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2563eb;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #1d4ed8;
+        }
+
+    </style>
+
+    <!-- نمایش صحیح بخش موردنظر بعد از لود -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector(".login-section").classList.add("active-section");
+        });
+    </script>
+</head>
+
+<body>
+    <!-- Login Section -->
+    <section id="loginSection" class="login-section active-section flex items-center justify-center p-4">
+        <div class="login-container w-full max-w-md rounded-2xl shadow-2xl p-1">
+            <div class="form-container rounded-xl p-8">
+                <div class="text-center mb-8">
+                    <h1 class="text-2xl font-bold mb-2">سیستم مستندات درایو Shihlin</h1>
+                    <p class="text-gray-600">لطفا وارد شوید</p>
+                </div>
+
+                <form id="loginForm" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-bold mb-2" for="username">
+                            نام کاربری
+                        </label>
+                        <input type="text" id="username"
+                               class="w-full px-4 py-3 rounded-lg focus:outline-none border-2 border-transparent focus:border-blue-500"
+                               required>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-bold mb-2" for="password">
+                            رمز عبور
+                        </label>
+                        <input type="password" id="password"
+                               class="w-full px-4 py-3 rounded-lg focus:outline-none border-2 border-transparent focus:border-blue-500"
+                               required>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input type="checkbox" id="remember" class="h-4 w-4 text-blue-600">
+                            <label for="remember" class="mr-2 text-sm">
+                                مرا به خاطر بسپار
+                            </label>
+                        </div>
+                        <a href="#" class="text-sm text-blue-600 hover:text-blue-800">
+                            فراموشی رمز عبور؟
+                        </a>
+                    </div>
+
+                    <button type="submit"
+                            class="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg font-bold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all">
+                        ورود به سیستم
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Section -->
+    <section id="mainSection" class="main-section min-h-screen bg-gray-50">
+        <!-- Navigation -->
+        <nav class="bg-white shadow-lg">
+            <div class="container mx-auto px-4">
+                <div class="flex justify-between items-center py-4">
+                    <div class="flex items-center">
+                        <h1 class="text-xl font-bold text-blue-600">Shihlin Drive</h1>
+                    </div>
+                    <div class="space-x-4 space-x-reverse">
+                        <button id="logoutBtn" class="px-4 py-2 text-red-600 hover:text-red-800">خروج</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Content -->
+        <div class="container mx-auto px-4 py-8">
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-6">نقشه کامل رجیسترها (Register Map)</h2>
+
+            <!-- رجیسترهای پایه (Base Registers) -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold mb-4 text-blue-700">رجیسترهای پایه</h3>
+                <table class="w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-2">آدرس</th>
+                            <th class="px-4 py-2">نام فارسی</th>
+                            <th class="px-4 py-2">نام انگلیسی</th>
+                            <th class="px-4 py-2">محدوده</th>
+                            <th class="px-4 py-2">دسترسی</th>
+                            <th class="px-4 py-2">توضیحات</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-4 py-2">0000H-00C7H</td>
+                            <td class="px-4 py-2">پارامترهای درایو</td>
+                            <td class="px-4 py-2">Drive Parameters</td>
+                            <td class="px-4 py-2">Pr0-Pr199</td>
+                            <td class="px-4 py-2">R/W</td>
+                            <td class="px-4 py-2">دسترسی به تمام پارامترهای قابل تنظیم درایو</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2">1000H</td>
+                            <td class="px-4 py-2">حالت عملکرد</td>
+                            <td class="px-4 py-2">Operation Mode</td>
+                            <td class="px-4 py-2">0000H-0008H</td>
+                            <td class="px-4 py-2">R/W</td>
+                            <td class="px-4 py-2">
+                                0000H: حالت PU<br>
+                                0001H: حالت خارجی<br>
+                                0002H: حالت JOG<br>
+                                0003H-0008H: حالت‌های ترکیبی
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- رجیسترهای مانیتورینگ -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold mb-4 text-blue-700">رجیسترهای مانیتورینگ</h3>
+                <table class="w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-2">آدرس</th>
+                            <th class="px-4 py-2">نام فارسی</th>
+                            <th class="px-4 py-2">نام انگلیسی</th>
+                            <th class="px-4 py-2">محدوده</th>
+                            <th class="px-4 py-2">دسترسی</th>
+                            <th class="px-4 py-2">توضیحات</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-4 py-2">1001H</td>
+                            <td class="px-4 py-2">وضعیت درایو</td>
+                            <td class="px-4 py-2">Inverter Status</td>
+                            <td class="px-4 py-2">Bit-mapped</td>
+                            <td class="px-4 py-2">R</td>
+                            <td class="px-4 py-2">
+                                bit0: در حال کار<br>
+                                bit1: چرخش رو به جلو<br>
+                                bit2: چرخش معکوس<br>
+                                bit3: فرکانس رسیده<br>
+                                bit4: اضافه بار<br>
+                                bit5: صدای کلید<br>
+                                bit6: تشخیص فرکانس<br>
+                                bit7: آلارم
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2">1002H</td>
+                            <td class="px-4 py-2">فرکانس تنظیمی</td>
+                            <td class="px-4 py-2">Set Frequency</td>
+                            <td class="px-4 py-2">0000H-9C40H</td>
+                            <td class="px-4 py-2">R/W</td>
+                            <td class="px-4 py-2">0-400Hz (0-16000)</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2">1003H</td>
+                            <td class="px-4 py-2">فرکانس خروجی</td>
+                            <td class="px-4 py-2">Output Frequency</td>
+                            <td class="px-4 py-2">0000H-9C40H</td>
+                            <td class="px-4 py-2">R</td>
+                            <td class="px-4 py-2">0-400Hz (0-16000)</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2">1004H</td>
+                            <td class="px-4 py-2">جریان خروجی</td>
+                            <td class="px-4 py-2">Output Current</td>
+                            <td class="px-4 py-2">0000H-FFFFH</td>
+                            <td class="px-4 py-2">R</td>
+                            <td class="px-4 py-2">مقدار جریان × 100</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- پارامترهای ارتباطی -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold mb-4 text-blue-700">پارامترهای ارتباطی</h3>
+                <table class="w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-2">پارامتر</th>
+                            <th class="px-4 py-2">نام فارسی</th>
+                            <th class="px-4 py-2">نام انگلیسی</th>
+                            <th class="px-4 py-2">محدوده</th>
+                            <th class="px-4 py-2">مقدار پیش‌فرض</th>
+                            <th class="px-4 py-2">توضیحات</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-4 py-2">Pr170</td>
+                            <td class="px-4 py-2">انتخاب پروتکل</td>
+                            <td class="px-4 py-2">Protocol Selection</td>
+                            <td class="px-4 py-2">0-1</td>
+                            <td class="px-4 py-2">0</td>
+                            <td class="px-4 py-2">
+                                0: پروتکل Shihlin<br>
+                                1: پروتکل MODBUS
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2">Pr171</td>
+                            <td class="px-4 py-2">آدرس ارتباطی</td>
+                            <td class="px-4 py-2">Communication Address</td>
+                            <td class="px-4 py-2">1-247</td>
+                            <td class="px-4 py-2">1</td>
+                            <td class="px-4 py-2">آدرس یکتای درایو در شبکه</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2">Pr172</td>
+                            <td class="px-4 py-2">سرعت انتقال</td>
+                            <td class="px-4 py-2">Baud Rate</td>
+                            <td class="px-4 py-2">0-2</td>
+                            <td class="px-4 py-2">1</td>
+                            <td class="px-4 py-2">
+                                0: 4800bps<br>
+                                1: 9600bps<br>
+                                2: 19200bps
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2">Pr173</td>
+                            <td class="px-4 py-2">فرمت داده</td>
+                            <td class="px-4 py-2">Data Format</td>
+                            <td class="px-4 py-2">0-5</td>
+                            <td class="px-4 py-2">0</td>
+                            <td class="px-4 py-2">
+                                ASCII Mode:<br>
+                                0: 7,N,2<br>
+                                1: 7,E,1<br>
+                                2: 7,O,1<br>
+                                RTU Mode:<br>
+                                3: 8,N,2<br>
+                                4: 8,E,1<br>
+                                5: 8,O,1
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- فرمت‌های پیام MODBUS -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold mb-4 text-blue-700">فرمت‌های پیام MODBUS</h3>
+
+                <!-- ASCII Mode -->
+                <div class="mb-6">
+                    <h4 class="text-lg font-semibold mb-3">فرمت ASCII</h4>
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-2">فیلد</th>
+                                <th class="px-4 py-2">طول</th>
+                                <th class="px-4 py-2">محتوا</th>
+                                <th class="px-4 py-2">توضیحات</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-4 py-2">STX</td>
+                                <td class="px-4 py-2">1 byte</td>
+                                <td class="px-4 py-2">':'</td>
+                                <td class="px-4 py-2">کاراکتر شروع (3AH)</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2">ADR</td>
+                                <td class="px-4 py-2">2 bytes</td>
+                                <td class="px-4 py-2">01-F7</td>
+                                <td class="px-4 py-2">آدرس درایو (1-247)</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2">CMD</td>
+                                <td class="px-4 py-2">2 bytes</td>
+                                <td class="px-4 py-2">کد دستور</td>
+                                <td class="px-4 py-2">کد تابع MODBUS</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- RTU Mode -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-3">فرمت RTU</h4>
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-2">فیلد</th>
+                                <th class="px-4 py-2">طول</th>
+                                <th class="px-4 py-2">محتوا</th>
+                                <th class="px-4 py-2">توضیحات</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-4 py-2">START</td>
+                                <td class="px-4 py-2">T1-T2-T3-T4</td>
+                                <td class="px-4 py-2">فاصله زمانی</td>
+                                <td class="px-4 py-2">فاصله بیش از 10ms</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2">ADR</td>
+                                <td class="px-4 py-2">1 byte</td>
+                                <td class="px-4 py-2">01H-F7H</td>
+                                <td class="px-4 py-2">آدرس درایو (1-247)</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2">CMD</td>
+                                <td class="px-4 py-2">1 byte</td>
+                                <td class="px-4 py-2">03H, 06H, 08H, 10H</td>
+                                <td class="px-4 py-2">کد تابع</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2">DATA</td>
+                                <td class="px-4 py-2">n bytes</td>
+                                <td class="px-4 py-2">N × 8 bits</td>
+                                <td class="px-4 py-2">محتوای داده</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2">CRC</td>
+                                <td class="px-4 py-2">2 bytes</td>
+                                <td class="px-4 py-2">CRC16</td>
+                                <td class="px-4 py-2">چک‌سام CRC</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2">END</td>
+                                <td class="px-4 py-2">T1-T2-T3-T4</td>
+                                <td class="px-4 py-2">فاصله زمانی</td>
+                                <td class="px-4 py-2">فاصله بیش از 10ms</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- کدهای تابع MODBUS -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold mb-4 text-blue-700">کدهای تابع MODBUS</h3>
+                <table class="w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-2">کد</th>
+                            <th class="px-4 py-2">نام فارسی</th>
+                            <th class="px-4 py-2">نام انگلیسی</th>
+                            <th class="px-4 py-2">ساختار درخواست</th>
+                            <th class="px-4 py-2">ساختار پاسخ</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-4 py-2">03H</td>
+                            <td class="px-4 py-2">خواندن چند رجیستر</td>
+                            <td class="px-4 py-2">Read Multiple Registers</td>
+                            <td class="px-4 py-2">
+                                آدرس شروع (2 بایت)<br>
+                                تعداد رجیسترها (2 بایت)
+                            </td>
+                            <td class="px-4 py-2">
+                                تعداد بایت‌های داده (1 بایت)<br>
+                                محتوای رجیسترها (n × 2 بایت)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2">06H</td>
+                            <td class="px-4 py-2">نوشتن تک رجیستر</td>
+                            <td class="px-4 py-2">Write Single Register</td>
+                            <td class="px-4 py-2">
+                                آدرس رجیستر (2 بایت)<br>
+                                مقدار داده (2 بایت)
+                            </td>
+                            <td class="px-4 py-2">
+                                آدرس رجیستر (2 بایت)<br>
+                                مقدار داده (2 بایت)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2">08H</td>
+                            <td class="px-4 py-2">عیب‌یابی</td>
+                            <td class="px-4 py-2">Diagnostics</td>
+                            <td class="px-4 py-2">
+                                کد تابع فرعی (2 بایت)<br>
+                                داده تست (2 بایت)
+                            </td>
+                            <td class="px-4 py-2">
+                                کد تابع فرعی (2 بایت)<br>
+                                داده بازگشتی (2 بایت)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2">10H</td>
+                            <td class="px-4 py-2">نوشتن چند رجیستر</td>
+                            <td class="px-4 py-2">Write Multiple Registers</td>
+                            <td class="px-4 py-2">
+                                آدرس شروع (2 بایت)<br>
+                                تعداد رجیسترها (2 بایت)<br>
+                                تعداد بایت‌ها (1 بایت)<br>
+                                محتوای رجیسترها (n × 2 بایت)
+                            </td>
+                            <td class="px-4 py-2">
+                                آدرس شروع (2 بایت)<br>
+                                تعداد رجیسترها (2 بایت)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- کدهای خطا -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold mb-4 text-blue-700">کدهای خطا</h3>
+                <table class="w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-4 py-2">کد خطا</th>
+                            <th class="px-4 py-2">نام فارسی</th>
+                            <th class="px-4 py-2">نام انگلیسی</th>
+                            <th class="px-4 py-2">توضیحات</th>
+                            <th class="px-4 py-2">راه‌حل</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr>
+                            <td class="px-4 py-2">01H</td>
+                            <td class="px-4 py-2">خطای کد تابع</td>
+                            <td class="px-4 py-2">Function Code Error</td>
+                            <td class="px-4 py-2">کد تابع نامعتبر است</td>
+                            <td class="px-4 py-2">بررسی کد تابع درخواستی</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2">02H</td>
+                            <td class="px-4 py-2">خطای آدرس</td>
+                            <td class="px-4 py-2">Address Error</td>
+                            <td class="px-4 py-2">آدرس خارج از محدوده</td>
+                            <td class="px-4 py-2">بررسی آدرس رجیستر</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2">03H</td>
+                            <td class="px-4 py-2">خطای مقدار داده</td>
+                            <td class="px-4 py-2">Data Value Error</td>
+                            <td class="px-4 py-2">مقدار داده نامعتبر</td>
+                            <td class="px-4 py-2">بررسی محدوده مجاز داده</td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 py-2">04H</td>
+                            <td class="px-4 py-2">خطای دستگاه</td>
+                            <td class="px-4 py-2">Device Error</td>
+                            <td class="px-4 py-2">خطای پردازش درایو</td>
+                            <td class="px-4 py-2">بررسی وضعیت درایو</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- مثال‌های کاربردی -->
+            <div class="mb-8">
+                <h3 class="text-xl font-bold mb-4 text-blue-700">مثال‌های کاربردی</h3>
+
+                <!-- مثال خواندن پارامتر -->
+                <div class="bg-gray-50 p-6 rounded-lg mb-4">
+                    <h4 class="font-bold mb-2">مثال 1: خواندن پارامتر Pr0</h4>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="font-semibold">درخواست (RTU):</p>
+                            <code class="block bg-gray-800 text-white p-4 rounded">
+                                01 03 00 00 00 01 84 0A
+                            </code>
+                            <ul class="mt-2 list-disc list-inside">
+                                <li>01: آدرس درایو</li>
+                                <li>03: کد تابع (خواندن)</li>
+                                <li>0000: آدرس پارامتر</li>
+                                <li>0001: تعداد رجیستر</li>
+                                <li>840A: CRC</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="font-semibold">پاسخ (مقدار = 6%):</p>
+                            <code class="block bg-gray-800 text-white p-4 rounded">
+                                01 03 02 00 06 B9 0A
+                            </code>
+                            <ul class="mt-2 list-disc list-inside">
+                                <li>01: آدرس درایو</li>
+                                <li>03: کد تابع</li>
+                                <li>02: تعداد بایت‌های داده</li>
+                                <li>0006: مقدار پارامتر (6)</li>
+                                <li>B90A: CRC</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- مثال نوشتن پارامتر -->
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h4 class="font-bold mb-2">مثال 2: تنظیم فرکانس 60Hz</h4>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="font-semibold">درخواست (RTU):</p>
+                            <code class="block bg-gray-800 text-white p-4 rounded">
+                                01 06 10 02 17 70 F8 45
+                            </code>
+                            <ul class="mt-2 list-disc list-inside">
+                                <li>01: آدرس درایو</li>
+                                <li>06: کد تابع (نوشتن تک رجیستر)</li>
+                                <li>1002: آدرس رجیستر فرکانس</li>
+                                <li>1770: مقدار (60Hz × 100)</li>
+                                <li>F845: CRC</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- نکات پیکربندی -->
+            <div>
+                <h3 class="text-xl font-bold mb-4 text-blue-700">نکات پیکربندی و راه‌اندازی</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- پیکربندی اولیه -->
+                    <div class="bg-blue-50 p-6 rounded-lg">
+                        <h4 class="font-bold text-blue-800 mb-4">پیکربندی اولیه</h4>
+                        <ol class="list-decimal list-inside space-y-3">
+                            <li>تنظیم پروتکل (Pr170):
+                                <ul class="list-disc list-inside mr-6 mt-2">
+                                    <li>0: پروتکل Shihlin</li>
+                                    <li>1: پروتکل MODBUS</li>
+                                </ul>
+                            </li>
+                            <li>تنظیم آدرس (Pr171):
+                                <ul class="list-disc list-inside mr-6 mt-2">
+                                    <li>محدوده: 1-247</li>
+                                    <li>هر درایو باید آدرس یکتا داشته باشد</li>
+                                </ul>
+                            </li>
+                            <li>تنظیم سرعت ارتباط (Pr172):
+                                <ul class="list-disc list-inside mr-6 mt-2">
+                                    <li>0: 4800bps</li>
+                                    <li>1: 9600bps</li>
+                                    <li>2: 19200bps</li>
+                                </ul>
+                            </li>
+                            <li>تنظیم فرمت داده (Pr173):
+                                <ul class="list-disc list-inside mr-6 mt-2">
+                                    <li>ASCII Mode:
+                                        <ul class="list-disc list-inside mr-6 mt-1">
+                                            <li>0: 7,N,2</li>
+                                            <li>1: 7,E,1</li>
+                                            <li>2: 7,O,1</li>
+                                        </ul>
+                                    </li>
+                                    <li>RTU Mode:
+                                        <ul class="list-disc list-inside mr-6 mt-1">
+                                            <li>3: 8,N,2</li>
+                                            <li>4: 8,E,1</li>
+                                            <li>5: 8,O,1</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <!-- عیب‌یابی و نکات مهم -->
+                    <div class="bg-green-50 p-6 rounded-lg">
+                        <h4 class="font-bold text-green-800 mb-4">عیب‌یابی و نکات مهم</h4>
+                        <ul class="list-disc list-inside space-y-3">
+                            <li>تنظیمات یکسان در دو طرف:
+                                <ul class="list-disc list-inside mr-6 mt-2">
+                                    <li>سرعت ارتباط</li>
+                                    <li>فرمت داده</li>
+                                    <li>پریتی</li>
+                                    <li>بیت‌های توقف</li>
+                                </ul>
+                            </li>
+                            <li>بررسی اتصالات فیزیکی:
+                                <ul class="list-disc list-inside mr-6 mt-2">
+                                    <li>اتصال صحیح A و B</li>
+                                    <li>شیلد کابل</li>
+                                    <li>مقاومت خاتمه خط</li>
+                                </ul>
+                            </li>
+                            <li>محاسبه CRC:
+                                <ul class="list-disc list-inside mr-6 mt-2">
+                                    <li>پلی‌نومیال: A001h</li>
+                                    <li>مقدار اولیه: FFFFh</li>
+                                    <li>بررسی صحت محاسبه</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- جزئیات رجیسترهای کنترلی و وضعیت -->
+            <div class="mt-8">
+                <h3 class="text-xl font-bold mb-4 text-blue-700">جزئیات رجیسترهای کنترلی و وضعیت</h3>
+
+                <!-- رجیستر کنترلی -->
+                <div class="mb-6">
+                    <h4 class="font-bold mb-3">رجیستر کنترلی (1001H)</h4>
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-2">بیت</th>
+                                <th class="px-4 py-2">نام</th>
+                                <th class="px-4 py-2">توضیحات</th>
+                                <th class="px-4 py-2">حالت‌ها</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-4 py-2">0</td>
+                                <td class="px-4 py-2">MRS</td>
+                                <td class="px-4 py-2">توقف خروجی</td>
+                                <td class="px-4 py-2">1: توقف، 0: عادی</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2">1</td>
+                                <td class="px-4 py-2">STF</td>
+                                <td class="px-4 py-2">چرخش رو به جلو</td>
+                                <td class="px-4 py-2">1: فعال، 0: غیرفعال</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2">2</td>
+                                <td class="px-4 py-2">STR</td>
+                                <td class="px-4 py-2">چرخش معکوس</td>
+                                <td class="px-4 py-2">1: فعال، 0: غیرفعال</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2">3</td>
+                                <td class="px-4 py-2">RL</td>
+                                <td class="px-4 py-2">سرعت پایین</td>
+                                <td class="px-4 py-2">1: فعال، 0: غیرفعال</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2">4</td>
+                                <td class="px-4 py-2">RM</td>
+                                <td class="px-4 py-2">سرعت متوسط</td>
+                                <td class="px-4 py-2">1: فعال، 0: غیرفعال</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2">5</td>
+                                <td class="px-4 py-2">RH</td>
+                                <td class="px-4 py-2">سرعت بالا</td>
+                                <td class="px-4 py-2">1: فعال، 0: غیرفعال</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- رجیستر وضعیت -->
+                <div>
+                    <h4 class="font-bold mb-3">رجیستر وضعیت (1001H)</h4>
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-2">بیت</th>
+                                <th class="px-4 py-2">نام</th>
+                                <th class="px-4 py-2">توضیحات</th>
+                                <th class="px-4 py-2">حالت‌ها</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <tr>
+                                <td class="px-4 py-2">0</td>
+                                <td class="px-4 py-2">RUN</td>
+                                <td class="px-4 py-2">وضعیت عملکرد</td>
+                                <td class="px-4 py-2">1: در حال کار، 0: متوقف</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2">1</td>
+                                <td class="px-4 py-2">FWD</td>
+                                <td class="px-4 py-2">جهت چرخش</td>
+                                <td class="px-4 py-2">1: رو به جلو، 0: معکوس</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2">2</td>
+                                <td class="px-4 py-2">SU</td>
+                                <td class="px-4 py-2">رسیدن به فرکانس</td>
+                                <td class="px-4 py-2">1: رسیده، 0: نرسیده</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2">3</td>
+                                <td class="px-4 py-2">OL</td>
+                                <td class="px-4 py-2">اضافه بار</td>
+                                <td class="px-4 py-2">1: فعال، 0: عادی</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-2">7</td>
+                                <td class="px-4 py-2">ALM</td>
+                                <td class="px-4 py-2">خطا</td>
+                                <td class="px-4 py-2">1: خطا، 0: عادی</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Scripts -->
+    <script>
+        // Login Form Handler
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if(username === 'TPS' && password === '1403-tpS') {
+                document.getElementById('loginSection').classList.remove('active-section');
+                document.getElementById('mainSection').classList.add('active-section');
+            } else {
+                alert('نام کاربری یا رمز عبور اشتباه است');
+            }
+        });
+
+        // Logout Handler
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            document.getElementById('mainSection').classList.remove('active-section');
+            document.getElementById('loginSection').classList.add('active-section');
+            document.getElementById('loginForm').reset();
+        });
+
+        // Search Functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('tbody tr');
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+
+        // Tab Switching
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.add('hidden'));
+
+                this.classList.add('active');
+                document.getElementById(`${this.dataset.tab}Content`).classList.remove('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
